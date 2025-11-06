@@ -212,9 +212,20 @@ const getMyEnrolledCoursesFromDB = (studentId, query) => __awaiter(void 0, void 
         result,
     };
 });
+const getSingleEnrolledCourse = (id, studentId) => __awaiter(void 0, void 0, void 0, function* () {
+    const student = yield student_model_1.Student.findOne({ id: studentId });
+    if (!student) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'Student not found !');
+    }
+    const enrolledCourseQuery = yield enrolledCourse_model_1.default.findById({
+        _id: id,
+    }).populate('semesterRegistration academicSemester academicFaculty academicDepartment offeredCourse course student faculty');
+    return enrolledCourseQuery;
+});
 exports.EnrolledCourseServices = {
     createEnrolledCourseIntoDB,
     updateEnrolledCourseMarksIntoDB,
     getAllEnrolledCoursesFromDB,
     getMyEnrolledCoursesFromDB,
+    getSingleEnrolledCourse,
 };

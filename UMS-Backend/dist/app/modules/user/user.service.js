@@ -216,16 +216,33 @@ const getAllUser = (query) => __awaiter(void 0, void 0, void 0, function* () {
         result,
     };
 });
-const updateMe = (userId, role) => __awaiter(void 0, void 0, void 0, function* () {
+const updateMe = (userId, role, body, file) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    // console.log({ userId }, { body }, { role }, { file })
     let result = null;
     if (role === 'student') {
-        result = yield student_model_1.Student.findOne({ id: userId }).populate('user');
+        result = yield student_model_1.Student.findOneAndUpdate({ id: userId }, body, {
+            new: true,
+        });
     }
     if (role === 'admin') {
-        result = yield admin_model_1.Admin.findOne({ id: userId }).populate('user');
+        result = yield admin_model_1.Admin.findOneAndUpdate({ id: userId }, body, {
+            new: true,
+        });
+        if (file) {
+            const imageName = `${userId}${(_a = result === null || result === void 0 ? void 0 : result.name) === null || _a === void 0 ? void 0 : _a.middleName}`;
+            const path = file === null || file === void 0 ? void 0 : file.path;
+            //send image to cloudinary
+            const { secure_url } = yield (0, sendImageToCloudinary_1.sendImageToCloudinary)(imageName, path);
+            if (result) {
+                result.profileImg = secure_url; // Ensure result is not null or undefined
+            }
+        }
     }
     if (role === 'faculty') {
-        result = yield faculty_model_1.Faculty.findOne({ id: userId }).populate('user');
+        result = yield faculty_model_1.Faculty.findOneAndUpdate({ id: userId }, body, {
+            new: true,
+        });
     }
     return result;
 });

@@ -183,7 +183,7 @@ const getMyOfferedCoursesFromDB = (userId, query) => __awaiter(void 0, void 0, v
     const student = yield student_model_1.Student.findOne({ id: userId });
     // find the student
     if (!student) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'User is noty found');
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'User is not found');
     }
     //find current ongoing semester
     const currentOngoingRegistrationSemester = yield semesterRegistration_model_1.SemesterRegistration.findOne({

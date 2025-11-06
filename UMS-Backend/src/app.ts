@@ -13,8 +13,8 @@ app.use(cookieParser())
 app.use(
   cors({
     origin: [
-      'https://universitymanagemnet.vercel.app',
       'http://localhost:5173',
+      'https://universitymanagemnet.vercel.app',
     ],
     credentials: true,
   })

@@ -57,9 +57,21 @@ const getMyEnrolledCourses = (0, catchAsync_1.default)((req, res) => __awaiter(v
         data: result.result,
     });
 }));
+const getSingleEnrolledCourses = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const studentId = req.user.userId;
+    const { id } = req.params;
+    const result = yield enrolledCourse_service_1.EnrolledCourseServices.getSingleEnrolledCourse(id, studentId);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Enrolled course id retrieved successfully',
+        data: result,
+    });
+}));
 exports.EnrolledCourseControllers = {
     createEnrolledCourse,
     updateEnrolledCourseMarks,
     getAllEnrolledCourses,
     getMyEnrolledCourses,
+    getSingleEnrolledCourses,
 };

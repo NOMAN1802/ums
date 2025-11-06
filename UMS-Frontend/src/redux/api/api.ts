@@ -7,9 +7,9 @@ import {
   FetchArgs,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../store";
 import { toast } from "sonner";
 import { logOut, setUser } from "../features/auth/authSlice";
+import { RootState } from "../store";
 
 type TApiError = {
   status: number;
@@ -19,7 +19,7 @@ type TApiError = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://ums-server-ivory.vercel.app/api/v1/",
+  baseUrl: "http://localhost:3000/api/v1/",
   //NOTE if you want to add cookies on your browser you need to change it to be credentials:'include'
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
@@ -47,7 +47,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     }
   }
   if (result?.error?.status === 401) {
-    const res = await fetch("https://ums-server-ivory.vercel.app/api/v1/auth/refresh-token", {
+    const res = await fetch("http://localhost:3000/api/v1/auth/refresh-token", {
       method: "POST",
       credentials: "include",
     });
@@ -71,6 +71,12 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["semester", "courses", "offeredCourse", "user", "academicDepartment"],
+  tagTypes: [
+    "semester",
+    "courses",
+    "offeredCourse",
+    "user",
+    "academicDepartment",
+  ],
   endpoints: () => ({}),
 });

@@ -32,7 +32,6 @@ router.post('/create-admin', (0, auth_1.default)(user_constant_1.USER_ROLE.super
 router.post('/change-status/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.superAdmin, user_constant_1.USER_ROLE.admin), (0, validateRequest_1.default)(user_validation_1.UserValidation.changeStatusValidationSchema), user_controller_1.UserControllers.changeStatus);
 router.get('/me', (0, auth_1.default)(user_constant_1.USER_ROLE.superAdmin, user_constant_1.USER_ROLE.admin, user_constant_1.USER_ROLE.faculty, user_constant_1.USER_ROLE.student), user_controller_1.UserControllers.getMe);
 router.patch('/me', (0, auth_1.default)(user_constant_1.USER_ROLE.superAdmin, user_constant_1.USER_ROLE.admin, user_constant_1.USER_ROLE.faculty, user_constant_1.USER_ROLE.student), sendImageToCloudinary_1.upload.single('file'), (req, res, next) => {
-    // console.log(req.body);
     req.body = JSON.parse(req.body.data);
     next();
 }, user_controller_1.UserControllers.updateMe);

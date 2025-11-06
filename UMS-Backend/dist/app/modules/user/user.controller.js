@@ -58,10 +58,10 @@ const getMe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, 
     });
 }));
 const updateMe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.user;
+    const { userId, role } = req.user;
+    const file = req.file;
     const body = req.body;
-    console.log(userId, body);
-    const result = yield user_service_1.UserServices.updateMe(userId, body);
+    const result = yield user_service_1.UserServices.updateMe(userId, role, body, file);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
