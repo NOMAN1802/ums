@@ -10,15 +10,19 @@ const app: Application = express()
 //parsers
 app.use(express.json())
 app.use(cookieParser())
-app.use(
-  cors({
-    origin: [
-      'http://localhost:5173',
-      'https://universitymanagemnet.vercel.app',
-    ],
-    credentials: true,
-  })
-)
+// Add this BEFORE your routes
+app.use(cors({
+  origin: [
+    'http://localhost:5173', // for local development
+    'http://10.110.122.244',
+    'http://ums.com',
+ 
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range']
+}));
 
 // application routes
 app.use('/api/v1', router)

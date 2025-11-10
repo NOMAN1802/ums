@@ -18,8 +18,10 @@ type TApiError = {
   };
 };
 
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api/v1";
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:3000/api/v1/",
+  baseUrl: API_BASE_URL,
   //NOTE if you want to add cookies on your browser you need to change it to be credentials:'include'
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
@@ -47,7 +49,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     }
   }
   if (result?.error?.status === 401) {
-    const res = await fetch("http://localhost:3000/api/v1/auth/refresh-token", {
+    const res = await fetch(`${API_BASE_URL}/auth/refresh-token`, {
       method: "POST",
       credentials: "include",
     });
